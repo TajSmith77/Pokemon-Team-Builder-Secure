@@ -1,0 +1,14 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Pokemon Team Builder
+{% endblock %}
+
+{% block content %}
+  <div class="main">
+    <h1>Pokemon Team Builder</h1>
+    <img src="https://images6.fanpop.com/image/photos/36600000/Pok-mon-image-pokemon-36680538-500-372.gif" alt="Pokemon gif" width="30%" height="30%">
+    <p>Check out all the Pokemon</p>
+    <button> <a href="{% url 'pokemon' %}">Pokedex</a></button>
+  </div>
+{% endblock %}

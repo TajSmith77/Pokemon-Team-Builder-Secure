@@ -1,0 +1,131 @@
+<!-- A form to filter pokemon by name, type, abilities, stats, or moves-->
+<div id="innerfilterform">
+    <form method="get" action ="{% url 'pokemon' %}">
+        <label for="pokedex_number">Pokedex #:</label>
+        <input type="number" 
+               name="pokedex_number"
+               placeholder="Search by pokedex #"
+               value="{{ request.GET.pokedex_number }}" 
+               max=1025>
+
+        <br>
+
+        <label for="name">Name:</label>
+        <input type="text" 
+               name="poke_name"
+               placeholder="Search by name"
+               value="{{ request.GET.poke_name }}">
+
+        <br>
+
+        <label for="type">Type:</label>
+        <select name="type">
+            <option value="">All Types</option>
+            {% for type in all_types %}
+                <option value="{{ type.id }}" 
+                        {% if type.id|stringformat:"s" in request.GET.type|stringformat:"s" %}selected{% endif %}>
+                    {{ type.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <label for="ability">Ability:</label>
+        <select name="ability">
+            <option value="">All Abilities</option>
+            {% for ability in all_abilities %}
+                <option value="{{ ability.id }}" 
+                        {% if ability.id|stringformat:"s" in request.GET.ability|stringformat:"s" %}selected{% endif %}>
+                    {{ ability.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <label for="move">Move:</label>
+        <select name="move">
+            <option value="">All Moves</option>
+            {% for move in all_moves %}
+                <option value="{{ move.id }}" 
+                        {% if move.id|stringformat:"s" in request.GET.move|stringformat:"s" %}selected{% endif %}>
+                    {{ move.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <label for="min_hp">Min HP:</label>
+        <input type="number" 
+               name="min_hp"
+               placeholder="HP"
+               value="{{ request.GET.min_hp }}">
+
+        <br>
+
+        <label for="min_attack">Min ATTACK:</label>
+        <input type="number" 
+               name="min_attack"
+               placeholder="ATTACK"
+               value="{{ request.GET.min_attack }}">
+
+        <br>
+
+        <label for="min_defense">Min DEFENSE:</label>
+        <input type="number" 
+               name="min_defense"
+               placeholder="DEFENSE"
+               value="{{ request.GET.min_defense }}">
+
+        <br>
+
+        <label for="min_special_attack">Min SP. ATTACK:</label>
+        <input type="number" 
+               name="min_special_attack"
+               placeholder="SP. ATTACK"
+               value="{{ request.GET.min_special_attack }}">
+
+        <br>
+
+        <label for="min_special_defense">Min SP. DEFENSE:</label>
+        <input type="number" 
+               name="min_special_defense"
+               placeholder="SP. DEFENSE"
+               value="{{ request.GET.min_special_defense }}">
+
+        <br>
+
+        <label for="min_speed">Min SPEED:</label>
+        <input type="number" 
+               name="min_speed"
+               placeholder="SPEED"
+               value="{{ request.GET.min_speed|default_if_none:'' }}">
+
+        <br>
+
+        <label for="sort_by">Sort by</label>
+        <select name="sort_by" id="sort_by">
+            <option value="id" {% if 'id' in request.GET.sort_by|stringformat:"s" %}selected{% endif %}>Pokedex #</option>
+            <option value="name" {% if 'name' in request.GET.sort_by|stringformat:"s" %}selected{% endif %}>Name</option>
+        </select>
+
+        <br>
+
+        <label for="per_page">Results per page</label>
+        <select name="per_page" id="per_page">
+            <option value="10" {% if '10' in request.GET.per_page|stringformat:"s" %}selected{% endif %}>10</option>
+            <option value="25" {% if '25' in request.GET.per_page|stringformat:"s" %}selected{% endif %}>25</option>
+            <option value="50" {% if '50' in request.GET.per_page|stringformat:"s" %}selected{% endif %}>50</option>
+            <option value="100" {% if '100' in request.GET.per_page|stringformat:"s" %}selected{% endif %}>100</option>
+        </select>
+
+        <br>
+
+        <button type="submit" id="filter_form_submit_button">Apply Filters</button>
+        <button type="submit" formaction="{% url 'pokemon' %}">Reset</button>
+    </form>
+</div>
+
+

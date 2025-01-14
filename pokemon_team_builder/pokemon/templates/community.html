@@ -1,0 +1,22 @@
+{%extends "master.html"%}
+
+{% block title %}
+Community
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align:center">Community Teams</h1>
+    {% if myteams %}
+    <div class="mycardall">
+        <ul>
+        {% for team in myteams %}
+        <a href="{% url 'teams_details' team.id %}"><li style = "font-size: 14px">{{team.name}} <img src="{{team.pokemon1.sprites}}" alt="Pokemon1" height="40px" width="40px"> <img src="{{team.pokemon2.sprites}}" alt="Pokemon2" height="40px" width="40px"> <img src="{{team.pokemon3.sprites}}" alt="Pokemon3" height="40px" width="40px"> <img src="{{team.pokemon4.sprites}}" alt="Pokemon4" height="40px" width="40px"> <img src="{{team.pokemon5.sprites}}" alt="Pokemon5" height="40px" width="40px"> <img src="{{team.pokemon6.sprites}}" alt="Pokemon6" height="40px" width="40px"> By: {{team.owner.username}} </li></a>
+        {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+        <div class="mycardall">
+            <ul><li>There are no teams</li></ul>
+        </div>
+    {% endif %}
+{% endblock %}

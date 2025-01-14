@@ -1,0 +1,80 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Moves
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align:center">Moves</h1>
+
+    <button type = "button" id ="movesfilterFormButton" name ="filter_visible">
+        {% if filter_visible %}
+            Hide Filters
+        {% else %}
+            Show Filters
+        {% endif %}
+    </button>
+    <div id="movesinnerfilterform" {% if not filter_visible %}class="hidden" {% endif %}>
+        <form method="get">
+            {{ form.as_p }}
+            <button type="submit" id="movesfilterFormSubmit">Search</button>
+            <a href="{% url 'moves' %}"><button>Reset</button></a>
+        </form>
+    </div>
+    <div class="mycardall">
+        {% for move in move_page %}   
+            <div class="{{ move.type }}">
+                <ul>
+                    <a href="{% url 'move_details' move.id %}"><li>{{ move.name }} | {{ move.type }}</li></a>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if move_page.has_previous %}
+                <a href="?page=1
+                {% if name_query %}&move_name={{ name_query|urlencode }}{% endif %}
+                {% if type_query %}&move_type={{ type_query|urlencode }}{% endif %}
+                {% if min_damage_query %}&min_damage={{ min_damage_query|urlencode }}{% endif %}">First</a>
+                <a href="?page={{ move_page.previous_page_number }}
+                {% if name_query %}&move_name={{ name_query|urlencode }}{% endif %}
+                {% if type_query %}&move_type={{ type_query|urlencode }}{% endif %}
+                {% if min_damage_query %}&min_damage={{ min_damage_query|urlencode }}{% endif %}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ move_page.number }} of {{ move_page.paginator.num_pages }}.
+            </span>
+
+            {% if move_page.has_next %}
+                <a href="?page={{ move_page.next_page_number }}
+                {% if name_query %}&move_name={{ name_query|urlencode }}{% endif %}
+                {% if type_query %}&move_type={{ type_query|urlencode }}{% endif %}
+                {% if min_damage_query %}&min_damage={{ min_damage_query|urlencode }}{% endif %}">Next</a>
+                <a href="?page={{ move_page.paginator.num_pages }}
+                {% if name_query %}&move_name={{ name_query|urlencode }}{% endif %}
+                {% if type_query %}&move_type={{ type_query|urlencode }}{% endif %}
+                {% if min_damage_query %}&min_damage={{ min_damage_query|urlencode }}{% endif %}">Last</a>
+            {% endif %}
+        </span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterFormButton = document.getElementById('movesfilterFormButton');
+            const innerFilterForm = document.getElementById('movesinnerfilterform');
+    
+            filterFormButton.addEventListener('click', function() {
+                innerFilterForm.classList.toggle('hidden');
+                if (innerFilterForm.classList.contains('hidden')) {
+                    filterFormButton.textContent = 'Show Filters';
+                } else {
+                    filterFormButton.textContent = 'Hide Filters';
+                }
+            });
+        });
+    </script>
+{% endblock %}

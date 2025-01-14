@@ -1,0 +1,123 @@
+{% extends "master.html" %}
+
+{% block title %}
+  Pokedex
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align:center">Pokemon</h1>
+    <!-- Filter Pokemon-->
+    <form id="wholefilterform" action="{% url 'pokemon' %} " method="get">
+        <button type = "button" id ="filterFormButton" name ="filter_visible">
+            {% if filter_visible %}
+                Hide Filters
+            {% else %}
+                Show Filters
+            {% endif %}
+        </button>
+        <div id="innerfilterform" {% if not filter_visible %}class="hidden" {% endif %}>
+            {%include 'pokemon_filter_form.html' %}
+        </div>
+    </form>
+    <!-- Show Pokemon -->
+    <div class="mycardall">
+        {% for x in poke_page %}   
+            <div class="{{ x.types.all.0.name }}">
+                <ul>
+                    <a href="{% url 'poke_details' x.id %}"><li><img src="{{ x.sprites }}" alt="Pokemon Sprite" width="50px" height="50px">#{{x.id}} | {{ x.name }} | {{ x.types.all.0.name }}{% if x.types.all.1 %}, {{ x.types.all.1.name }}{% endif %}</li></a>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+    <!-- Pagination -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if poke_page.has_previous %}
+                <a href="?page=1
+                {% if name_query %}&poke_name={{ name_query|urlencode }}{% endif %}
+                {% if pokedex_number_query %}&pokedex_number={{ pokedex_number_query|urlencode }}{% endif %}
+                {% if type_query %}&type={{ type_query|urlencode }}{% endif %}
+                {% if ability_query %}&ability={{ ability_query|urlencode }}{% endif %}
+                {% if move_query %}&move={{ move_query|urlencode }}{% endif %}
+                {% if hp_query %}&min_hp={{ hp_query|urlencode }}{% endif %}
+                {% if attack_query %}&min_attack={{ attack_query|urlencode }}{% endif %}
+                {% if defense_query %}&min_defense={{ defense_query|urlencode }}{% endif %}
+                {% if special_attack_query %}&min_special_attack={{ special_attack_query|urlencode }}{% endif %}
+                {% if special_defense_query %}&min_special_defense={{ special_defense_query|urlencode }}{% endif %}
+                    {% if speed_query %}&min_speed={{ speed_query|urlencode }}{% endif %}
+                    {% if sort_by %}&sort_by={{ sort_by|urlencode }}{% endif %}
+                    {% if per_page %}&per_page={{ per_page|urlencode }}{% endif %}
+                    ">&laquo; first</a>
+                    <a href="?page={{ poke_page.previous_page_number|urlencode }}
+                    {% if name_query %}&poke_name={{ name_query|urlencode }}{% endif %}
+                    {% if pokedex_number_query %}&pokedex_number={{ pokedex_number_query|urlencode }}{% endif %}
+                    {% if type_query %}&type={{ type_query|urlencode }}{% endif %}
+                    {% if ability_query %}&ability={{ ability_query|urlencode }}{% endif %}
+                    {% if move_query %}&move={{ move_query|urlencode }}{% endif %}
+                    {% if hp_query %}&min_hp={{ hp_query|urlencode }}{% endif %}
+                    {% if attack_query %}&min_attack={{ attack_query|urlencode }}{% endif %}
+                    {% if defense_query %}&min_defense={{ defense_query|urlencode }}{% endif %}
+                    {% if special_attack_query %}&min_special_attack={{ special_attack_query|urlencode }}{% endif %}
+                    {% if special_defense_query %}&min_special_defense={{ special_defense_query|urlencode }}{% endif %}
+                    {% if speed_query %}&min_speed={{ speed_query|urlencode }}{% endif %}
+                    {% if sort_by %}&sort_by={{ sort_by|urlencode }}{% endif %}
+                    {% if per_page %}&per_page={{ per_page|urlencode }}{% endif %}
+                    ">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ poke_page.number }} of {{ poke_page.paginator.num_pages }}.
+                </span>
+
+                {% if poke_page.has_next %}
+                    <a href="?page={{ poke_page.next_page_number|urlencode }}
+                    {% if name_query %}&poke_name={{ name_query|urlencode }}{% endif %}
+                    {% if pokedex_number_query %}&pokedex_number={{ pokedex_number_query|urlencode }}{% endif %}
+                    {% if type_query %}&type={{ type_query|urlencode }}{% endif %}
+                    {% if ability_query %}&ability={{ ability_query|urlencode }}{% endif %}
+                    {% if move_query %}&move={{ move_query|urlencode }}{% endif %}
+                    {% if hp_query %}&min_hp={{ hp_query|urlencode }}{% endif %}
+                    {% if attack_query %}&min_attack={{ attack_query|urlencode }}{% endif %}
+                    {% if defense_query %}&min_defense={{ defense_query|urlencode }}{% endif %}
+                    {% if special_attack_query %}&min_special_attack={{ special_attack_query|urlencode }}{% endif %}
+                    {% if special_defense_query %}&min_special_defense={{ special_defense_query|urlencode }}{% endif %}
+                    {% if speed_query %}&min_speed={{ speed_query|urlencode }}{% endif %}
+                    {% if sort_by %}&sort_by={{ sort_by|urlencode }}{% endif %}
+                    {% if per_page %}&per_page={{ per_page|urlencode }}{% endif %}
+                    ">next</a>
+                    <a href="?page={{ poke_page.paginator.num_pages|urlencode }}
+                    {% if name_query %}&poke_name={{ name_query|urlencode }}{% endif %}
+                    {% if pokedex_number_query %}&pokedex_number={{ pokedex_number_query|urlencode }}{% endif %}
+                    {% if type_query %}&type={{ type_query|urlencode }}{% endif %}
+                    {% if ability_query %}&ability={{ ability_query|urlencode }}{% endif %}
+                    {% if move_query %}&move={{ move_query|urlencode }}{% endif %}
+                    {% if hp_query %}&min_hp={{ hp_query|urlencode }}{% endif %}
+                    {% if attack_query %}&min_attack={{ attack_query|urlencode }}{% endif %}
+                    {% if defense_query %}&min_defense={{ defense_query|urlencode }}{% endif %}
+                    {% if special_attack_query %}&min_special_attack={{ special_attack_query|urlencode }}{% endif %}
+                    {% if special_defense_query %}&min_special_defense={{ special_defense_query|urlencode }}{% endif %}
+                    {% if speed_query %}&min_speed={{ speed_query|urlencode }}{% endif %}
+                    {% if sort_by %}&sort_by={{ sort_by|urlencode }}{% endif %}
+                    {% if per_page %}&per_page={{ per_page|urlencode }}{% endif %}
+                    ">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterFormButton = document.getElementById('filterFormButton');
+        const innerFilterForm = document.getElementById('innerfilterform');
+
+        filterFormButton.addEventListener('click', function() {
+            innerFilterForm.classList.toggle('hidden');
+            if (innerFilterForm.classList.contains('hidden')) {
+                filterFormButton.textContent = 'Show Filters';
+            } else {
+                filterFormButton.textContent = 'Hide Filters';
+            }
+        });
+    });
+</script>
+{% endblock %}

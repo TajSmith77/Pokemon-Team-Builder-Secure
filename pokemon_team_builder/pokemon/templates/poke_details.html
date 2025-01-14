@@ -1,0 +1,41 @@
+{% extends "master.html" %}
+
+{% block title %}
+  {{mypokemon.name}} Details
+{% endblock %}
+
+{% block content %}
+    <!-- Show Pokemon Details -->
+    <div class="mycard{{ mypokemon.types.all.0.name }}">
+            <h1>{{mypokemon.id}} {{ mypokemon.name }} </h1>
+            <img src="{{ mypokemon.sprites }}" alt="Pokemon Sprite" width="200px" height="200px">
+            <p><strong>Types:</strong> {{ mypokemon.types.all.0.name }}{% if mypokemon.types.all.1 %}, {{ mypokemon.types.all.1.name }}{% endif %}</p>
+            <!-- Abilities -->
+            <p><strong>Abilities:</strong></p>
+            <ul>
+                {% for ability in mypokemon.abilities.all %}
+                    <li>{{ ability.name }}</li>
+                {% endfor %}
+            </ul>
+            <!-- Stats -->
+            <p><strong>Stats:</strong></p>
+            <ul>
+                <li><strong>HP:</strong> {{ mypokemon.hp }}</li>
+                <li><strong>Attack:</strong> {{ mypokemon.attack }}</li>
+                <li><strong>Defense:</strong> {{ mypokemon.defense }}</li>
+                <li><strong>Special Attack:</strong> {{ mypokemon.special_attack }}</li>
+                <li><strong>Special Defense:</strong> {{ mypokemon.special_defense }}</li>
+                <li><strong>Speed:</strong> {{ mypokemon.speed }}</li>
+            </ul>
+            <!-- Moves -->
+            <p><strong>Moves:</strong></p>
+            <ul>
+                {% for move in mypokemon.moves.all %}
+                    <div class="{{ move.type.name }}">
+                       <a href="{% url 'move_details' move.id %}"><li>{{ move.name }}</li></a> 
+                    </div>
+                {% endfor %}
+            </ul>
+    </div>
+    <a href="{% url 'pokemon' %}"><button>Back to all Pokemon</button></a>
+{% endblock %}

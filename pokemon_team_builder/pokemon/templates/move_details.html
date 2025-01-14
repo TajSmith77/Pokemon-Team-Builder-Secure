@@ -1,0 +1,17 @@
+{% extends "master.html" %}
+
+{% block title %}
+    {{ mymove.name }} Details
+{% endblock %}
+
+{% block content %}
+    <div class="mycard{{ mymove.type }}">
+        <h1 style="text-align: center;">{{ mymove.name }} Details</h1>
+        <br><br><br>
+        <p><strong>Type:</strong> {{ mymove.type }}</p>
+        <p><strong>Power:</strong> {{ mymove.power }}</p>
+        <p><strong>PP:</strong> {{ mymove.pp }}</p>
+        <p><strong>Accuracy:</strong> {{ mymove.accuracy }}</p>
+    </div>
+    <a href="{% url 'moves'  %}"><button id="back_to_moves_button">Back to all moves</button></a>
+{% endblock %}

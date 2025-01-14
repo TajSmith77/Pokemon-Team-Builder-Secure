@@ -1,0 +1,180 @@
+{% extends "master.html" %}
+{% load static %}
+
+{% block title %}
+Create Team
+{% endblock %}
+
+{% block content %}
+    <h1>Create Team</h1>
+
+    <form method="post" action="{% url 'create_team' %}">
+        {% csrf_token %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_name">Team Name</label>
+                {{ form.name }}
+            </div>
+            <div class="form-group">
+                <label for="id_is_public">Public?</label>
+                {{ form.is_public }}
+            </div>
+            <div class="form-group">
+                <label for="id_pokemon1">Pokemon 1</label>
+                {{ form.pokemon1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_ability1">Ability</label>
+                {{ form.ability1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move1_1">Move 1</label>
+                {{ form.move1_1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move1_2">Move 2</label>
+                {{ form.move1_2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move1_3">Move 3</label>
+                {{ form.move1_3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move1_4">Move 4</label>
+                {{ form.move1_4 }}
+            </div> 
+            <hr>       
+            <div class="form-group">
+                <label for="id_pokemon2">Pokemon 2</label>
+                {{ form.pokemon2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_ability2">Ability</label>
+                {{ form.ability2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move2_1">Move 1</label>
+                {{ form.move2_1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move2_2">Move 2</label>
+                {{ form.move2_2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move2_3">Move 3</label>
+                {{ form.move2_3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move2_4">Move 4</label>
+                {{ form.move2_4 }}
+            </div>
+            <hr> 
+            <div class="form-group">
+                <label for="id_pokemon3">Pokemon 3</label>
+                {{ form.pokemon3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_ability3">Ability</label>
+                {{ form.ability3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move3_1">Move 1</label>
+                {{ form.move3_1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move3_2">Move 2</label>
+                {{ form.move3_2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move3_3">Move 3</label>
+                {{ form.move3_3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move3_4">Move 4</label>
+                {{ form.move3_4 }}
+            </div>
+            <hr> 
+            <div class="form-group">
+                <label for="id_pokemon4">Pokemon 4</label>
+                {{ form.pokemon4 }}
+            </div>
+            <div class="form-group">
+                <label for="id_ability4">Ability</label>
+                {{ form.ability4 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move4_1">Move 1</label>
+                {{ form.move4_1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move4_2">Move 2</label>
+                {{ form.move4_2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move4_3">Move 3</label>
+                {{ form.move4_3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move4_4">Move 4</label>
+                {{ form.move4_4 }}
+            </div>
+            <hr> 
+            <div class="form-group">
+                <label for="id_pokemon5">Pokemon 5</label>
+                {{ form.pokemon5 }}
+            </div>
+            <div class="form-group">
+                <label for="id_ability5">Ability</label>
+                {{ form.ability5 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move5_1">Move 1</label>
+                {{ form.move5_1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move5_2">Move 2</label>
+                {{ form.move5_2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move5_3">Move 3</label>
+                {{ form.move5_3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move5_4">Move 4</label>
+                {{ form.move5_4 }}
+            </div>
+            <hr> 
+            <div class="form-group">
+                <label for="id_pokemon6">Pokemon 6</label>
+                {{ form.pokemon6 }}
+            </div>
+            <div class="form-group">
+                <label for="id_ability6">Ability</label>
+                {{ form.ability6 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move6_1">Move 1</label>
+                {{ form.move6_1 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move6_2">Move 2</label>
+                {{ form.move6_2 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move6_3">Move 3</label>
+                {{ form.move6_3 }}
+            </div>
+            <div class="form-group">
+                <label for="id_move6_4">Move 4</label>
+                {{ form.move6_4 }}
+            </div>
+            <button type="submit" class="btn btn-primary" name="CreateTeam">Submit</button>
+        </form>
+    </form>
+
+    <script src="{% static 'teamform.js' %}"></script>
+
+{% endblock %}
+
+

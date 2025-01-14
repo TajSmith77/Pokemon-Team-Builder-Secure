@@ -1,0 +1,188 @@
+{%extends "master.html"%}
+
+{% block title %}
+{{myteam.name}} Details
+{% endblock %}
+
+{% block content %}
+
+<h1 style="text-align:center">{{myteam.name}} Members</h1>
+    <span class="editdelete">
+        {% if myteam.owner == request.user %}
+            <a href="{% url 'update_team' myteam.id %}"><button id="edit_team_button">Edit</button></a>
+            <form id="delete_team_{{myteam.id}}" method="post" action="{% url 'delete_team' myteam.id %}"> 
+            {% csrf_token %}
+            <a href="{% url 'delete_team' myteam.id %}"><button type="submit" class="btn btn-danger delete-btn" id="delete_team_button">Delete</button></a>
+            </form>
+        {% endif %}
+        <a href="{% url 'export_team_json' myteam.id %}"><button id="export_team_json_button">Export as JSON</button></a>
+        <a href="{% url 'export_team_csv' myteam.id %}"><button id="export_team_csv_button">Export as CSV</button></a>
+        <a href="{% url 'export_team_pokemon_showdown' myteam.id %}"><button id="export_team_pokemon_showdown_button">Export for Pokemon Showdown</button></a>
+    </span>
+    <ul>
+        <div class ="mycard{{ myteam.pokemon1.types.all.0.name }}">
+            <li>{% if myteam.pokemon1 %}
+                <img src="{{myteam.pokemon1.sprites}}" alt="Pokemon Sprite"> 
+                {{myteam.pokemon1.id}} 
+                {{myteam.pokemon1}} |
+                {{myteam.pokemon1.types.first}},{{myteam.pokemon1.types.last}} |
+                {{myteam.ability1}}
+                <ul> 
+                    <div class="{{myteam.move1_1.type}}">
+                        <li>{{myteam.move1_1}}</li> 
+                    </div>
+                    <div class="{{myteam.move1_2.type}}">
+                        <li>{{myteam.move1_2}}</li> 
+                    </div>
+                    <div class="{{myteam.move1_3.type}}">
+                        <li>{{myteam.move1_3}}</li> 
+                    </div>
+                    <div class="{{myteam.move1_4.type}}">
+                        <li>{{myteam.move1_4}}</li> 
+                    </div>
+                </ul>
+                {% endif %}
+            </li>
+        </div>
+        <div class ="mycard{{ myteam.pokemon2.types.all.0.name }}">
+            <li>{% if myteam.pokemon2 %}
+                <img src="{{myteam.pokemon2.sprites}}" alt="Pokemon Sprite"> 
+                {{myteam.pokemon2.id}} 
+                {{myteam.pokemon2}} |
+                {{myteam.pokemon2.types.first}},{{myteam.pokemon2.types.last}} |
+                {{myteam.ability2}}
+                <ul> 
+                    <div class="{{myteam.move2_1.type}}">
+                        <li>{{myteam.move2_1}}</li> 
+                    </div>
+                    <div class="{{myteam.move2_2.type}}">
+                        <li>{{myteam.move2_2}}</li> 
+                    </div>
+                    <div class="{{myteam.move2_3.type}}">
+                        <li>{{myteam.move2_3}}</li> 
+                    </div>
+                    <div class="{{myteam.move2_4.type}}">
+                        <li>{{myteam.move2_4}}</li>
+                    </div>
+                </ul>
+                {% endif %}
+            </li>
+        </div>
+        <div class ="mycard{{ myteam.pokemon3.types.all.0.name }}">
+            <li>{% if myteam.pokemon3 %}
+                <img src="{{myteam.pokemon3.sprites}}" alt="Pokemon Sprite"> 
+                {{myteam.pokemon3.id}} 
+                {{myteam.pokemon3}} |
+                {{myteam.pokemon3.types.first}},{{myteam.pokemon3.types.last}} |
+                {{myteam.ability3}}
+                <ul> 
+                    <div class="{{myteam.move3_1.type}}">
+                        <li>{{myteam.move3_1}}</li> 
+                    </div>
+                    <div class="{{myteam.move3_2.type}}">
+                        <li>{{myteam.move3_2}}</li> 
+                    </div>
+                    <div class="{{myteam.move3_3.type}}">
+                        <li>{{myteam.move3_3}}</li> 
+                    </div>
+                    <div class="{{myteam.move3_4.type}}">
+                        <li>{{myteam.move3_4}}</li>
+                    </div>
+                </ul>
+                {% endif %}
+            </li>
+        </div>
+        <div class ="mycard{{ myteam.pokemon4.types.all.0.name }}">
+            <li>{% if myteam.pokemon4 %}
+                <img src="{{myteam.pokemon4.sprites}}" alt="Pokemon Sprite"> 
+                {{myteam.pokemon4.id}} {{myteam.pokemon4}} |
+                {{myteam.pokemon4.types.first}},{{myteam.pokemon4.types.last}} |
+                {{myteam.ability4}}
+                <ul> 
+                    <div class="{{myteam.move4_1.type}}">
+                        <li>{{myteam.move4_1}}</li>
+                    </div> 
+                    <div class="{{myteam.move4_2.type}}">
+                        <li>{{myteam.move4_2}}</li>
+                    </div>
+                    <div class="{{myteam.move4_3.type}}">
+                        <li>{{myteam.move4_3}}</li>
+                    </div>
+                    <div class="{{myteam.move4_4.type}}">
+                        <li>{{myteam.move4_4}}</li>
+                    </div>
+                </ul>
+                {% endif %}
+            </li>
+        </div>
+        <div class ="mycard{{ myteam.pokemon5.types.all.0.name }}">
+            <li>{% if myteam.pokemon5 %}
+                <img src="{{myteam.pokemon5.sprites}}" alt="Pokemon Sprite">
+                {{myteam.pokemon5.id}} 
+                {{myteam.pokemon5}} |
+                {{myteam.pokemon5.types.first}},{{myteam.pokemon5.types.last}} |
+                {{myteam.ability5}}
+                <ul> 
+                    <div class="{{myteam.move5_1.type}}">
+                    <li>{{myteam.move5_1}}</li> 
+                    </div>
+                    <div class="{{myteam.move5_2.type}}">
+                    <li>{{myteam.move5_2}}</li> 
+                    </div>
+                    <div class="{{myteam.move5_3.type}}">
+                    <li>{{myteam.move5_3}}</li> 
+                    </div>
+                    <div class="{{myteam.move5_4.type}}">
+                    <li>{{myteam.move5_4}}</li>
+                    </div>
+                </ul>
+                {% endif %}
+            </li>
+        </div>
+        <div class ="mycard{{ myteam.pokemon6.types.all.0.name }}">
+            <li>{% if myteam.pokemon6 %}
+                <img src="{{myteam.pokemon6.sprites}}" alt="Pokemon Sprite"> 
+                {{myteam.pokemon6.id}} 
+                {{myteam.pokemon6}} |
+                {{myteam.pokemon6.types.first}},{{myteam.pokemon6.types.last}} |
+                {{myteam.ability6}}
+                <ul>
+                    <div class="{{myteam.move6_1.type}}">
+                    <li>{{myteam.move6_1}}</li>
+                    </div>
+                    <div class="{{myteam.move6_2.type}}">
+                    <li>{{myteam.move6_2}}</li>
+                    </div>
+                    <div class="{{myteam.move6_3.type}}">
+                    <li>{{myteam.move6_3}}</li>
+                    </div>
+                    <div class="{{myteam.move6_4.type}}">
+                    <li>{{myteam.move6_4}}</li>
+                    </div>
+                </ul>
+                {% endif %}
+            </li>
+        </div>
+    </ul>
+    <a href="{% url 'teams' %}"><button>Back to teams</button></a>
+    <a href="{% url 'community' %}"><button>Back to community</button></a>
+
+
+
+
+<script>
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', event => {
+            const confirmDelete = confirm('Are you sure you want to delete this team?');
+            if (confirmDelete) {
+                const formID = this.parentNode.id;
+                const form = document.getElementById(formID);
+                form.submit();
+            }
+            else {
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+{% endblock %}

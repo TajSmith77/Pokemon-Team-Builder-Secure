@@ -1,0 +1,28 @@
+{% extends "master.html" %}
+
+{% block title %}
+Edit Profile
+{% endblock %}
+
+{% block content %}
+    <h1 style="text-align:center">Edit Profile</h1>
+
+    <form method="post" action="{% url 'edit_profile' %}" style ="text-align:center">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_first_name">First Name</label>
+            {{ form.first_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_last_name">Last Name</label>
+            {{ form.last_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_username">Username</label>
+            {{ form.username }}
+        </div>
+      <!-- Password field -->
+
+        <button type="submit" class="btn btn-primary" id="edit_profile_submit_button">Submit</button>
+    </form>
+{% endblock %}

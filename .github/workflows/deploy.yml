@@ -1,0 +1,22 @@
+# Deploy to render using a deploy hook
+
+#name: Deploy
+
+#on:
+ #   push:
+ #       branches:
+ #           - main
+
+#jobs:
+ #   deploy:
+  #      runs-on: ubuntu-latest
+
+ #       steps:
+  #          - name: Checkout code
+   #           uses: actions/checkout@v3
+
+    #        - name: Deploy to Render
+     #         env:
+      #            RENDER_HOOK: ${{ secrets.RENDER_HOOK }}
+       #       run: |
+        #          curl -X POST $RENDER_HOOK

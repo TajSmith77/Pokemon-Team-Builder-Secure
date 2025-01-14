@@ -1,0 +1,28 @@
+{%extends "master.html"%}
+
+{% block title %}
+Teams
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <h1 style="text-align:center">{{user.username}}'s Teams</h1>
+    {% if myteams %}
+    <div class="mycardall">
+        <ul>
+        {% for team in myteams %}
+        <a href="details/{{team.id}}"><li>{{team.name}} <img src="{{team.pokemon1.sprites}}" alt="Pokemon1"> <img src="{{team.pokemon2.sprites}}" alt="Pokemon2"> <img src="{{team.pokemon3.sprites}}" alt="Pokemon3"> <img src="{{team.pokemon4.sprites}}" alt="Pokemon4"> <img src="{{team.pokemon5.sprites}}" alt="Pokemon5"> <img src="{{team.pokemon6.sprites}}" alt="Pokemon6"> </li></a>
+        {% endfor %}
+        </ul>
+    </div>
+    {% else %}
+        <div class="mycardall">
+            <ul><li>You have no teams</li></ul>
+        </div>
+    {% endif %}
+    <a href="{% url 'create_team' %}"><button>Create Team</button></a>
+
+
+
+{% endif %}
+{% endblock %}

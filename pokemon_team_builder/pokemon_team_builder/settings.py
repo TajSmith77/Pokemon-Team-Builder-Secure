@@ -173,6 +173,11 @@ LOGGING = {
         },
         'django.request': {
             'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'security': {
+            'handlers': ['console'],
             'level': 'WARNING',
             'propagate': False,
         },

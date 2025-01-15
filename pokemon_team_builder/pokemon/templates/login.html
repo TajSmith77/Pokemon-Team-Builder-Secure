@@ -31,18 +31,21 @@ Login
         <!-- Username input field -->
         <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
-            <input type="text" class="form-control" name="username" id="exampleInputEmail1" aria-describedby="emailHelp"
+            <input type="text" class="form-control" name="username" id="inputUsername" aria-describedby="usernameHelp"
                 placeholder="Enter username" required>
         </div>
 
         <!-- Password input field -->
         <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
+            <label for="inputPassword">Password</label>
+            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
         </div>
 
         <!-- Link to registration page -->
-        <p>Don't have an account <a href="/register/">Register</a> </p>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register</a> </p>
+
+        <!-- Link to forgot password page -->
+        <p>Forgot password? <a href="{% url 'password_reset' %}">Forgot Password</a> </p>
 
         <!-- Submit button -->
         <button type="submit" class="btn btn-primary" id="login_submit_button">Submit</button>

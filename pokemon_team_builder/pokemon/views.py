@@ -198,21 +198,27 @@ def register_page(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
          
-        # Check if a user with the provided username already exists
-        user = User.objects.filter(username=username)
-         
-        if user.exists():
+        # Check if a user with the provided username already exists 
+        if User.objects.filter(username=username).exists():
             # Display an information message if the username is taken
             messages.info(request, "Username already taken!")
+            return redirect('/register/')
+         
+        # Check if a user with the provided email already exists
+        if User.objects.filter(email=email).exists():
+            # Display an information message if the email is taken
+            messages.info(request, "Email already taken!")
             return redirect('/register/')
          
         # Create a new User object with the provided information
         user = User.objects.create_user(
             first_name=first_name,
             last_name=last_name,
-            username=username
+            username=username,
+            email=email
         )
          
         # Set the user's password and save the user object

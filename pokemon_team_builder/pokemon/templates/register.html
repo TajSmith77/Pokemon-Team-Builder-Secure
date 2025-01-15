@@ -11,7 +11,7 @@
 {% block content %}
     <div class="container mt-5">
         <!-- Registration form -->
-        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data" autocomplete="off">
             {% csrf_token %}  <!-- CSRF token for security -->
  
             <!-- Registration form heading -->
@@ -31,35 +31,35 @@
             <div class="form-group">
                 <label for="first_name">First name</label>
                 <input type="text" class="form-control" id="inputFirstName" aria-describedby="inputFirstName"
-                    placeholder="Enter First name" name="first_name" required>
+                    placeholder="Enter First name" name="first_name" required autocomplete="off">
             </div>
  
             <!-- Last Name input field -->
             <div class="form-group">
                 <label for="last_name">Last name</label>
                 <input type="text" name="last_name" class="form-control" id="inputLastName"
-                    aria-describedby="inputLastName" placeholder="Enter Last name" required>
+                    aria-describedby="inputLastName" placeholder="Enter Last name" required autocomplete="off">
             </div>
  
             <!-- Username input field -->
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" name="username" id="inputUsername"
-                    aria-describedby="usernameHelp" placeholder="Enter username" required>
+                    aria-describedby="usernameHelp" placeholder="Enter username" required autocomplete="off">
             </div>
  
             <!-- Email input field -->
             <div class="form-group">
                 <label for="email">Email address</label>
                 <input type="email" class="form-control" name="email" id="inputEmail"
-                    aria-describedby="emailHelp" placeholder="Enter email" required>
+                    aria-describedby="emailHelp" placeholder="Enter email" required autocomplete="off">
             </div>
  
             <!-- Password input field -->
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="password" id="inputPassword"
-                    placeholder="Password" required>
+                    placeholder="Password" required autocomplete="off">
             </div>
  
             <!-- Link to login page for users who already have an account -->

@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 from django.db.models import Prefetch
 from .models import *
 from .forms import *
@@ -211,6 +213,14 @@ def register_page(request):
         if User.objects.filter(email=email).exists():
             # Display an information message if the email is taken
             messages.info(request, "Email already taken!")
+            return redirect('/register/')
+        
+        #Password validation
+        try:
+            validate_password(password)
+        except ValidationError as e:
+            for message in e.messages:
+                messages.error(request, message)
             return redirect('/register/')
          
         # Create a new User object with the provided information

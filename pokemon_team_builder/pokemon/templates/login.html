@@ -11,7 +11,7 @@ Login
 {% block content %}
 <div class="container mt-5">
     <!-- Login form -->
-    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data" action="{% url 'login' %}">
+    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data" autocomplete="off" action="{% url 'login' %}">
 
         {% csrf_token %}  <!-- CSRF token for security -->
 
@@ -32,13 +32,13 @@ Login
         <div class="form-group">
             <label for="exampleInputEmail1">Username</label>
             <input type="text" class="form-control" name="username" id="inputUsername" aria-describedby="usernameHelp"
-                placeholder="Enter username" required>
+                placeholder="Enter username" required autocomplete="off">
         </div>
 
         <!-- Password input field -->
         <div class="form-group">
             <label for="inputPassword">Password</label>
-            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required>
+            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Password" required autocomplete="off">
         </div>
 
         <!-- Link to registration page -->

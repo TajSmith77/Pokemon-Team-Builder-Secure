@@ -9,10 +9,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Set up logging to show progress in the console
         logger = logging.getLogger('django')
-        logger.setLevel(logging.INFO)
         
         # Fetch Pokémon dex data from PokeAPI
-        dex_response = requests.get(url="https://pokeapi.co/api/v2/pokemon/?&limit=1025")
+        dex_response = requests.get(url="https://pokeapi.co/api/v2/pokemon/?&limit=5")
         dex_response.raise_for_status()
         dex_data = dex_response.json()
 
@@ -49,6 +48,9 @@ class Command(BaseCommand):
                 # Add Pokémon to the bulk list
                 if created:
                     bulk_pokemon.append(poke_object)
+                    logger.info(f"Added pokemon: {poke_data['name']}")
+                else:
+                    logger.info(f"Pokemon already exists: {poke_data['name']}")
 
                 # Create or get abilities
                 abilities_to_add = []
@@ -56,6 +58,9 @@ class Command(BaseCommand):
                     ability_object, created = Ability.objects.get_or_create(name=ability["ability"]["name"])
                     if created:
                         bulk_abilities.append(ability_object)
+                        logger.info(f"Added ability: {ability['ability']['name']}")
+                    else:
+                        logger.info(f"Ability already exists: {ability['ability']['name']}")
                     abilities_to_add.append(ability_object)
 
                 poke_object.abilities.add(*abilities_to_add)
@@ -66,6 +71,9 @@ class Command(BaseCommand):
                     type_object, created = Type.objects.get_or_create(name=poke_type["type"]["name"])
                     if created:
                         bulk_types.append(type_object)
+                        logger.info(f"Added type: {poke_type['type']['name']}")
+                    else:
+                        logger.info(f"Type already exists: {poke_type['type']['name']}")
                     types_to_add.append(type_object)
 
                 poke_object.types.add(*types_to_add)
@@ -89,12 +97,17 @@ class Command(BaseCommand):
                     )
                     if created:
                         bulk_moves.append(move_object)
+                        logger.info(f"Added move: {move_data['name']}")
+                    else:
+                        logger.info(f"Move already exists: {move_data['name']}")
 
                     poke_object.moves.add(move_object)
 
                 # Log creation
                 if created:
                     logger.info(f"Created new Pokémon: {poke_object.name} (ID: {poke_object.id})")
+                else:
+                    logger.info(f"Updated existing Pokémon: {poke_object.name} (ID: {poke_object.id})")
 
             except requests.exceptions.RequestException as e:
                 logger.error(f"Error fetching data for {pokemon['name']}: {str(e)}")
@@ -104,17 +117,25 @@ class Command(BaseCommand):
         if bulk_pokemon:
             Pokemon.objects.bulk_create(bulk_pokemon)
             logger.info(f"Bulk created {len(bulk_pokemon)} Pokémon.")
+        else:
+            logger.info("No Pokémon to create.")
 
         if bulk_abilities:
             Ability.objects.bulk_create(bulk_abilities)
             logger.info(f"Bulk created {len(bulk_abilities)} abilities.")
+        else:
+            logger.info("No abilities to create.")
 
         if bulk_types:
             Type.objects.bulk_create(bulk_types)
             logger.info(f"Bulk created {len(bulk_types)} types.")
+        else:
+            logger.info("No types to create.")
 
         if bulk_moves:
             Move.objects.bulk_create(bulk_moves)
             logger.info(f"Bulk created {len(bulk_moves)} moves.")
+        else:
+            logger.info("No moves to create.")
 
         logger.info("Database population completed.")

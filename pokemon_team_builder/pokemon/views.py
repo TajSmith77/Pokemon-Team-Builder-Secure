@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db.models import Prefetch
+from axes.helpers import axes_dispatch
 from .models import *
 from .forms import *
 import csv
@@ -163,24 +164,19 @@ def main_redirect(request):
 
  
 # login page
+@axes_dispatch
 def login_page(request):
     # Check if the HTTP request method is POST (form submission)
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
          
-        # Check if a user with the provided username exists
-        if not User.objects.filter(username=username).exists():
-            # Display an error message if the username does not exist
-            messages.error(request, 'Invalid Username')
-            return redirect('/login/')
-         
         # Authenticate the user with the provided username and password
         user = authenticate(username=username, password=password)
          
         if user is None:
-            # Display an error message if authentication fails (invalid password)
-            messages.error(request, "Invalid Password")
+            # Display an error message if authentication fails
+            messages.error(request, "Invalid Username or Password")
             return redirect('/login/')
         else:
             # Log in the user and redirect to the home page upon successful login

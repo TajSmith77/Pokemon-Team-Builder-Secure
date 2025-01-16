@@ -137,7 +137,7 @@ AXES_LOCK_OUT_AT_FAILURE = True # Lock out user
 #Session handling
 SESSION_COOKIE_AGE = 6000 # 1 hour session. If user is inactive for 1 hour, they will be logged out
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True #If user closes the browser, they will be logged out
-SESSION_COOKIE_SECURE = True #Only send the cookie over HTTPS
+SESSION_COOKIE_SECURE = True #Only send the cookie over HTTPS 
 
 #CSRF protection
 CSRF_COOKIE_SECURE = True #Only send the cookie over HTTPS
@@ -149,6 +149,10 @@ SECURE_SSL_REDIRECT = True #Redirect to HTTPS
 SECURE_HSTS_SECONDS = 3153600 #1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True #Include subdomains
 SECURE_HSTS_PRELOAD = True #Preload the HSTS policy
+
+SECURE_CONTENT_TYPE_NOSNIFF = True #Prevent browsers from sniffing the content type
+
+SECURE_BROWSER_XSS_FILTER = True #Prevent cross-site scripting
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

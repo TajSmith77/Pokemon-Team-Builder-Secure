@@ -141,6 +141,7 @@ SESSION_COOKIE_SECURE = True #Only send the cookie over HTTPS
 #CSRF protection
 CSRF_COOKIE_SECURE = True #Only send the cookie over HTTPS
 CSRF_COOKIE_HTTPONLY = True #No JavaScript can access the cookie
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(' ')
 
 #HTTPS
 SECURE_SSL_REDIRECT = True #Redirect to HTTPS

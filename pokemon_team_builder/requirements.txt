@@ -1,7 +1,5 @@
 ﻿asgiref==3.8.1
 attrs==23.2.0
-boto3==1.34.101
-botocore==1.34.101
 cement==2.8.2
 certifi==2024.2.2
 cffi==1.16.0
@@ -21,7 +19,6 @@ pathspec==0.10.1
 psycopg2-binary==2.9.9
 pyasn1==0.6.0
 pycparser==2.22
-pypiwin32==223
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
 PyYAML==6.0.1

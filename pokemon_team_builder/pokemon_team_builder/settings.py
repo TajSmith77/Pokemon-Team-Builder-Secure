@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'axes',
     'pokemon',
 ]
 
@@ -87,6 +88,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
+#Password validators
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', #
@@ -109,6 +111,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 PASSWORD_RESET_TIMEOUT = 14400 #password reset token expires in 4 hours
 
+#Password hashing
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
+
+#Email
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -116,6 +127,26 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+
+#Login settings
+AXES_FAILURE_LIMIT = 5 # 5 failed login attempts
+AXES_COOLOFF_TIME = 1 # 1 hour
+AXES_LOCK_OUT_AT_FAILURE = True # Lock out user
+
+#Session handling
+SESSION_COOKIE_AGE = 6000 # 1 hour session. If user is inactive for 1 hour, they will be logged out
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True #If user closes the browser, they will be logged out
+SESSION_COOKIE_SECURE = True #Only send the cookie over HTTPS
+
+#CSRF protection
+CSRF_COOKIE_SECURE = True #Only send the cookie over HTTPS
+CSRF_COOKIE_HTTPONLY = True #No JavaScript can access the cookie
+
+#HTTPS
+SECURE_SSL_REDIRECT = True #Redirect to HTTPS
+SECURE_HSTS_SECONDS = 3153600 #1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True #Include subdomains
+SECURE_HSTS_PRELOAD = True #Preload the HSTS policy
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

@@ -107,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
     {
-        'NAME': 'pokemon.validators.ComplexPasswordValidator',}
+        'NAME': 'pokemon.validators.ComplexPasswordValidator',} #Custom password validator
 ]
 
 PASSWORD_RESET_TIMEOUT = 14400 #password reset token expires in 4 hours
@@ -130,9 +130,11 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 #Login settings
+AXES_ENABLED = True #Track failed login attempts
+AXES_ONLY_USER_FAILURES = False # Track failed login attempts for all users
 AXES_FAILURE_LIMIT = 5 # 5 failed login attempts
 AXES_COOLOFF_TIME = 1 # 1 hour
-AXES_LOCK_OUT_AT_FAILURE = True # Lock out user
+AXES_LOCK_OUT_AT_FAILURE = True # Lock out user after reaching failure limit
 
 #Session handling
 SESSION_COOKIE_AGE = 6000 # 1 hour session. If user is inactive for 1 hour, they will be logged out
@@ -142,7 +144,7 @@ SESSION_COOKIE_SECURE = True #Only send the cookie over HTTPS
 #CSRF protection
 CSRF_COOKIE_SECURE = True #Only send the cookie over HTTPS
 CSRF_COOKIE_HTTPONLY = True #No JavaScript can access the cookie
-CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(' ')
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS').split(' ') #Trusted origins
 
 #HTTPS
 SECURE_SSL_REDIRECT = True #Redirect to HTTPS
@@ -217,6 +219,11 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'WARNING',
             'propagate': False,
+        },
+        'axes': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
     },
 }

@@ -60,7 +60,7 @@ ROOT_URLCONF = 'pokemon_team_builder.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR /'pokemon'/ 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

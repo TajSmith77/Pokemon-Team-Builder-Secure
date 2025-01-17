@@ -170,7 +170,7 @@ def login_page(request):
         password = request.POST.get('password')
          
         # Authenticate the user with the provided username and password
-        user = authenticate(username=username, password=password)
+        user = authenticate(request=request, username=username, password=password)
          
         if user is None:
             # Display an error message if authentication fails

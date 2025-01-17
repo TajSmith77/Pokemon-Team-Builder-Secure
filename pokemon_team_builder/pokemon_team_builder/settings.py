@@ -131,12 +131,14 @@ DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 #Login settings
 AXES_ENABLED = True #Track failed login attempts
-AXES_ONLY_USER_FAILURES = True # Track failed login attempts for all users
+AXES_ONLY_USER_FAILURES = True # Track failed login attempts by username
 #AXES_USE_USER_IP = True # Track failed login attempts by IP
 AXES_FAILURE_LIMIT = 5 # 5 failed login attempts
 AXES_COOLOFF_TIME = 1 # 1 hour
 AXES_LOCK_OUT_AT_FAILURE = True # Lock out user after reaching failure limit
 AXES_RESET_ON_SUCCESS = True # Reset counter on successful login
+AXES_ENABLE_ACCESS_FAILURE_LOG = True
+AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False
 
 #Session handling
 SESSION_COOKIE_AGE = 6000 # 1 hour session. If user is inactive for 1 hour, they will be logged out

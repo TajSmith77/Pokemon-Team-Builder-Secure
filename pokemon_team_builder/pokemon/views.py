@@ -258,16 +258,18 @@ def register_page(request):
     # Render the registration page template (GET request)
     return render(request, 'register.html')
 
+token_generator = ExpiringTokenGenerator() # Create an instance of ExpiringTokenGenerator
+
 def send_verification_email(request, user):
-    # Generate a unique activation token for the user
-    token = ExpiringTokenGenerator.make_token(user)
-    uid = urlsafe_base64_encode(force_bytes(user.pk))
-    domain = get_current_site(request).domain
+   
+    token = token_generator.make_token(user) # Generate the token 
+    uid = urlsafe_base64_encode(force_bytes(user.pk)) # Generate the URL-safe base64-encoded user ID
+    domain = get_current_site(request).domain # Get the current domain
 
     # Construct the activation link
-    verification_link = f'http://{domain}/verify/{uid}/{token}/'
-    subject = 'Activate your account for the Pokemon Team Builder'
-    message = render_to_string('registration/email_verification.html', {
+    verification_link = f'http://{domain}/verify/{uid}/{token}/' #Make the verification link
+    subject = 'Activate your account for the Pokemon Team Builder' # Subject of the email
+    message = render_to_string('registration/email_verification.html', { # Render the email template
         'user': user,
         'verification_link': verification_link
     })
@@ -283,16 +285,16 @@ def send_verification_email(request, user):
     
 def verify_account(request, uidb64, token):
     try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = get_object_or_404(User, pk=uid)
+        uid = urlsafe_base64_decode(uidb64).decode() # Decode the URL-safe base64-encoded user ID
+        user = get_object_or_404(User, pk=uid) # Get the user object
         
-        if ExpiringTokenGenerator.check_token(user, token):
-            user.is_active = True
-            user.save()
+        if token_generator.check_token(user, token): # Check if the token is valid
+            user.is_active = True # Set the user's activation status to True
+            user.save() # Save the user object
             messages.success(request, "Your account has been activated successfully!")
             return redirect('/login/')
-        else:
-            messages.error(request, "The activation link is invalid or has expired.")
+        else: 
+            messages.error(request, "The activation link is invalid or has expired.") 
             return redirect('/register/')
     except Exception as e:
         messages.error(request, "There was an error verifying your account. Please try again.")

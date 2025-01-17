@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db.models import Prefetch
-from axes.helpers import axes_dispatch
 from .models import *
 from .forms import *
 import csv
@@ -164,7 +163,6 @@ def main_redirect(request):
 
  
 # login page
-@axes_dispatch
 def login_page(request):
     # Check if the HTTP request method is POST (form submission)
     if request.method == "POST":

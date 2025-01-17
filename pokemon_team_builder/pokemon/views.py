@@ -286,7 +286,7 @@ def send_verification_email(request, user):
         fail_silently=False
         )
 
-    logger.warning(f"Activation email sent to {user.email}")
+    logger.warning(f"Activation email sent to {user.username}")
     
 def verify_account(request, uidb64, token):
     try:

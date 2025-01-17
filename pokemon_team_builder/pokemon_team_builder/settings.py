@@ -139,6 +139,7 @@ AXES_LOCK_OUT_AT_FAILURE = True # Lock out user after reaching failure limit
 AXES_RESET_ON_SUCCESS = False # Reset counter on successful login
 AXES_ENABLE_ACCESS_FAILURE_LOG = True
 AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False
+AXES_LOCKOUT_URL = None
 
 #Session handling
 SESSION_COOKIE_AGE = 6000 # 1 hour session. If user is inactive for 1 hour, they will be logged out

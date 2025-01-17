@@ -13,9 +13,10 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
-from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.tokens import default_token_generator, ExpiringTokenGenerator
 from django.contrib.sites.shortcuts import get_current_site
 from django.conf import settings
+from .utils import *
 from .models import *
 from .forms import *
 import csv
@@ -183,7 +184,7 @@ def login_page(request):
             if user is not None:
                if not user.is_active:
                    # Display an error message if the user needs to activate their account
-                   messages.error(request, "Your account is not yet active. Please check your email for activation link.")
+                   messages.error(request, "Invalid username or password. Please try again.")
                    return redirect('/login/')
                else:
                     # Log in the user and redirect to the home page upon successful login
@@ -259,7 +260,7 @@ def register_page(request):
 
 def send_verification_email(request, user):
     # Generate a unique activation token for the user
-    token = default_token_generator.make_token(user)
+    token = ExpiringTokenGenerator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     domain = get_current_site(request).domain
 
@@ -285,7 +286,7 @@ def verify_account(request, uidb64, token):
         uid = urlsafe_base64_decode(uidb64).decode()
         user = get_object_or_404(User, pk=uid)
         
-        if default_token_generator.check_token(user, token):
+        if ExpiringTokenGenerator.check_token(user, token):
             user.is_active = True
             user.save()
             messages.success(request, "Your account has been activated successfully!")

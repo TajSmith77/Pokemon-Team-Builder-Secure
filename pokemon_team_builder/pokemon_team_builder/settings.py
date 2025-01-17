@@ -136,7 +136,7 @@ AXES_ONLY_USER_FAILURES = True # Track failed login attempts by username
 AXES_FAILURE_LIMIT = 5 # 5 failed login attempts
 AXES_COOLOFF_TIME = 1 # 1 hour
 AXES_LOCK_OUT_AT_FAILURE = True # Lock out user after reaching failure limit
-AXES_RESET_ON_SUCCESS = True # Reset counter on successful login
+AXES_RESET_ON_SUCCESS = False # Reset counter on successful login
 AXES_ENABLE_ACCESS_FAILURE_LOG = True
 AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False
 

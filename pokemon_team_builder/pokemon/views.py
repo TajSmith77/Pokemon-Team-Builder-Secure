@@ -180,14 +180,19 @@ def login_page(request):
             # Authenticate the user with the provided username and password
             user = authenticate(request=request, username=username, password=password)
             
-            if user is None:
-                # Display an error message if authentication fails
-                messages.error(request, "Invalid Username or Password")
-                return redirect('/login/')
+            if user is not None:
+               if not user.is_active:
+                   # Display an error message if the user needs to activate their account
+                   messages.error(request, "Your account is not yet active. Please check your email for activation link.")
+                   return redirect('/login/')
+               else:
+                    # Log in the user and redirect to the home page upon successful login
+                    login(request, user)
+                    return redirect('/')
             else:
-                # Log in the user and redirect to the home page upon successful login
-                login(request, user)
-                return redirect('/')
+                # Display an error message if authentication fails
+                messages.error(request, "Invalid username or password. Please try again.")
+                return redirect('/login/')
         except Exception as e:
             # Display an error message if an exception occurs during authentication
             messages.error(request, "There was an error logging in. Please try again.")

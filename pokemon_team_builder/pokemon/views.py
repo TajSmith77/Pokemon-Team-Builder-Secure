@@ -21,7 +21,9 @@ from .models import *
 from .forms import *
 import csv
 import json
+import logging
 
+logger = logging.getLogger('pokemon_team_builder')
 def pokemon(request):
     mypokemon = Pokemon.objects.all().prefetch_related('types', 'moves', 'abilities')
     all_types = Type.objects.all()
@@ -253,6 +255,7 @@ def register_page(request):
          
         # Display an information message indicating successful account creation
         messages.info(request, "Account created Successfully! Please check your email to activate your account.")
+        logger.warning(f"Account created for {user.username}")
         return redirect('/login/')
      
     # Render the registration page template (GET request)
@@ -282,6 +285,8 @@ def send_verification_email(request, user):
         [user.email], 
         fail_silently=False
         )
+
+    logger.warning(f"Activation email sent to {user.email}")
     
 def verify_account(request, uidb64, token):
     try:
@@ -292,13 +297,19 @@ def verify_account(request, uidb64, token):
             user.is_active = True # Set the user's activation status to True
             user.save() # Save the user object
             messages.success(request, "Your account has been activated successfully!")
+            logger.warning(f"User {user.username} has successfully activated their account.")
             return redirect('/login/')
+            
         else: 
-            messages.error(request, "The activation link is invalid or has expired.") 
+            messages.error(request, "The activation link is invalid or has expired.")
+            logger.error(f"Activation link for user {user.username} is invalid or has expired.") 
             return redirect('/register/')
+            
     except Exception as e:
         messages.error(request, "There was an error verifying your account. Please try again.")
+        logger.error(f"Error verifying user account: {str(e)}")
         return redirect('/register/')
+        
     
 
 
@@ -306,6 +317,7 @@ def verify_account(request, uidb64, token):
 def logout_page(request):
     logout(request)
     messages.info(request, "You have been logged out!")
+    logger.warning(f"User {request.user.username} has logged out.")
     return redirect('/login/') # Redirect to the login page upon pass
 
 @login_required
@@ -324,6 +336,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.info(request, "Profile edited successfully!")
+            logger.warning(f"User {request.user.username} has edited their profile.")
             return redirect('/profile/')
     else:
         form = UserEditForm(instance=request.user)
@@ -358,6 +371,7 @@ def delete_profile(request):
             if user.username == request.user.username:
                 user.delete()
                 messages.info(request, "Profile deleted successfully!")
+                logger.warning(f"User {request.user.username} has deleted their profile.")
                 return redirect('/login/')
             else:
                 messages.error(request, "You can only delete your own profile!")

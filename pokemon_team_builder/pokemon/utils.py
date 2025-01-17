@@ -7,7 +7,7 @@ class ExpiringTokenGenerator(default_token_generator.__class__):
     def make_token(self, user):
         
         token = super().make_token(user) #Call the parent method to generate the token
-        expiry_time = timezone.now() + timedelta(seconds=10)  # Set the token expiration time to 4 hours from now
+        expiry_time = timezone.now() + timedelta(hours=4)  # Set the token expiration time to 4 hours from now
         return f"{token}|{expiry_time.isoformat()}"
     
     def check_token(self, user, token):

@@ -230,5 +230,10 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': True,
         },
+        'pokemon_team_builder': {
+            'handlers': ['console'],
+            'level': 'WARNING',
+            'propagate': False,
+        }
     },
 }

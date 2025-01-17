@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db.models import Prefetch
+from axes.exceptions import AxesLockout
 from .models import *
 from .forms import *
 import csv
@@ -169,17 +170,23 @@ def login_page(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
          
-        # Authenticate the user with the provided username and password
-        user = authenticate(request=request, username=username, password=password)
+        try:
+            # Authenticate the user with the provided username and password
+            user = authenticate(request=request, username=username, password=password)
+            
+            if user is None:
+                # Display an error message if authentication fails
+                messages.error(request, "Invalid Username or Password")
+                return redirect('/login/')
+            else:
+                # Log in the user and redirect to the home page upon successful login
+                login(request, user)
+                return redirect('/')
          
-        if user is None:
-            # Display an error message if authentication fails
-            messages.error(request, "Invalid Username or Password")
+        # Display an error message if the user is locked out
+        except AxesLockout:
+            messages.error(request, "You have been locked out. Please try again later.")
             return redirect('/login/')
-        else:
-            # Log in the user and redirect to the home page upon successful login
-            login(request, user)
-            return redirect('/')
      
     # Render the login page template (GET request)
     return render(request, 'login.html')

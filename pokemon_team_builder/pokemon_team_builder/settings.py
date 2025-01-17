@@ -131,7 +131,7 @@ DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
 
 #Login settings
 AXES_ENABLED = True #Track failed login attempts
-AXES_ONLY_USER_FAILURES = False # Track failed login attempts for all users
+AXES_ONLY_USER_FAILURES = True # Track failed login attempts for all users
 #AXES_USE_USER_IP = True # Track failed login attempts by IP
 AXES_FAILURE_LIMIT = 5 # 5 failed login attempts
 AXES_COOLOFF_TIME = 1 # 1 hour

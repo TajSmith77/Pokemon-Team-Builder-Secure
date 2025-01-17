@@ -30,6 +30,7 @@ urlpatterns = [
     path('profile/edit_profile/', views.edit_profile, name='edit_profile'), #edit profile
     path('login/', views.login_page, name='login'), #login
     path('register/',views.register_page, name='register'), #register
+    path('verify/<uidb64>/<token>/', views.verify_account, name='verify_account'), #verify
     path('logout/', views.logout_page, name='logout'), #logout
     path('admin/', admin.site.urls), #admin
 

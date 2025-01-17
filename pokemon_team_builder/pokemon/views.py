@@ -9,6 +9,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db.models import Prefetch
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
 from .models import *
 from .forms import *
 import csv
@@ -227,19 +234,64 @@ def register_page(request):
             first_name=first_name,
             last_name=last_name,
             username=username,
-            email=email
+            email=email,
+            is_active=False
         )
          
         # Set the user's password and save the user object
         user.set_password(password)
         user.save()
+
+        # Send an activation email to the user
+        send_verification_email(request, user)
          
         # Display an information message indicating successful account creation
-        messages.info(request, "Account created Successfully!")
+        messages.info(request, "Account created Successfully! Please check your email to activate your account.")
         return redirect('/login/')
      
     # Render the registration page template (GET request)
     return render(request, 'register.html')
+
+def send_verification_email(request, user):
+    # Generate a unique activation token for the user
+    token = default_token_generator.make_token(user)
+    uid = urlsafe_base64_encode(force_bytes(user.pk))
+    domain = get_current_site(request).domain
+
+    # Construct the activation link
+    verification_link = f'http://{domain}/verify/{uid}/{token}/'
+    subject = 'Activate your account for the Pokemon Team Builder'
+    message = render_to_string('registration/email_verification.html', {
+        'user': user,
+        'verification_link': verification_link
+    })
+
+    # Send the activation email
+    send_mail(
+        subject, 
+        message, 
+        settings.DEFAULT_FROM_EMAIL, 
+        [user.email], 
+        fail_silently=False
+        )
+    
+def verify_account(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = get_object_or_404(User, pk=uid)
+        
+        if default_token_generator.check_token(user, token):
+            user.is_active = True
+            user.save()
+            messages.success(request, "Your account has been activated successfully!")
+            return redirect('/login/')
+        else:
+            messages.error(request, "The activation link is invalid or has expired.")
+            return redirect('/register/')
+    except Exception as e:
+        messages.error(request, "There was an error verifying your account. Please try again.")
+        return redirect('/register/')
+    
 
 
 @login_required

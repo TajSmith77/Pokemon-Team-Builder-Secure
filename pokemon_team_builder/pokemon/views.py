@@ -9,7 +9,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from django.db.models import Prefetch
-from axes.helpers import is_user_locked
 from .models import *
 from .forms import *
 import csv
@@ -178,22 +177,14 @@ def login_page(request):
                 # Display an error message if authentication fails
                 messages.error(request, "Invalid Username or Password")
                 return redirect('/login/')
-            # Check if the user is locked out
-            elif username and is_user_locked(username):
-                # Display an error message if the user is locked out
-                messages.error(request, "You have been locked out. Please try again later.")
-                return redirect('/login/')
             else:
                 # Log in the user and redirect to the home page upon successful login
                 login(request, user)
                 return redirect('/')
-         
-        # Display an error message if the user is locked out
-        except :
-            failed_attempts = AccessAttempt.objects.filter(username=username).count()
-            if failed_attempts >= 5:
-                messages.error(request, "You have been locked out. Please try again later.")
-                return redirect('/login/')
+        except Exception as e:
+            # Display an error message if an exception occurs during authentication
+            messages.error(request, "There was an error logging in. Please try again.")
+            return redirect('/login/')
      
     # Render the login page template (GET request)
     return render(request, 'login.html')

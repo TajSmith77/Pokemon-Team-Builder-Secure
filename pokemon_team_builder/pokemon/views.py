@@ -184,9 +184,11 @@ def login_page(request):
                 return redirect('/')
          
         # Display an error message if the user is locked out
-        except AxesLockout:
-            messages.error(request, "You have been locked out. Please try again later.")
-            return redirect('/login/')
+        except :
+            failed_attempts = AccessAttempt.objects.filter(username=username).count()
+            if failed_attempts >= 5:
+                messages.error(request, "You have been locked out. Please try again later.")
+                return redirect('/login/')
      
     # Render the login page template (GET request)
     return render(request, 'login.html')

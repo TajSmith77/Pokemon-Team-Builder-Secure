@@ -226,7 +226,7 @@ LOGGING = {
         },
         'axes': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'WARNING',
             'propagate': True,
         },
     },
